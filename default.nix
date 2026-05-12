@@ -30,6 +30,8 @@ let
   vortexWrapperScript = pkgs.replaceVars ./vortex-wrapper.sh {
     winePrefix = winePrefix;
     umuLauncher = "${pkgs.umu-launcher}";
+    steamRun = "${pkgs.steam-run}";
+    xvfbRun = "${pkgs.xvfb-run}/bin/xvfb-run";
   };
 
   installPhaseScript = pkgs.replaceVars ./install-phase.sh {
