@@ -9,6 +9,12 @@ More information at the [original repository](https://github.com/pikdum/steam-de
 Just clone this repository in any path then `cd` to it and run:
 ```sh
 nix-build .
+./result/bin/vortex-install
+```
+wait for a while until script finishes all the downloads. Then run Vortex
+
+```sh
+./result/share/applications/vortex-wrapper.sh
 ```
 
 ## TODO

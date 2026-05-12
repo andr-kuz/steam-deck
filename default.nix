@@ -24,7 +24,7 @@ let
   };
 
   preInstall = pkgs.writeShellScriptBin "vortex-install" ''
-    exec ${installScript}
+    exec bash ${installScript}
   '';
   
   vortexWrapperScript = pkgs.replaceVars ./vortex-wrapper.sh {
@@ -39,7 +39,7 @@ let
     homeDir = "${homeDir}";
   };
 
-in 
+in
 pkgs.stdenvNoCC.mkDerivation {
   pname = "vortex-setup";
   version = vortexVersion;
@@ -53,7 +53,11 @@ pkgs.stdenvNoCC.mkDerivation {
   installPhase = ''
     runHook preInstall
     
-    # Execute the install script
+    # Install the vortex-install script
+    mkdir -p $out/bin
+    cp ${preInstall}/bin/vortex-install $out/bin/
+    
+    # Set up desktop integration
     bash ${installPhaseScript}
   '';
   
