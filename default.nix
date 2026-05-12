@@ -60,6 +60,19 @@ pkgs.stdenvNoCC.mkDerivation {
     # Set up desktop integration
     bash ${installPhaseScript}
   '';
+
+  shellHook = ''
+    TARGET_DIR="$HOME/.local/share/applications"
+    mkdir -p "$TARGET_DIR"
+    
+    # Собираем текущий деривейшн, если папки result еще нет
+    if [ ! -d "result" ]; then
+      nix-build .
+    fi
+    cp $out/share/applications/vortex.desktop "$TARGET_DIR/vortex.desktop"
+    
+    ${pkgs.desktop-file-utils}/bin/update-desktop-database "$TARGET_DIR" || true
+  '';
   
   meta = with lib; {
     description = "Vortex mod manager installer for Linux via umu-launcher";
